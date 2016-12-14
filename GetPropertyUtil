@@ -1,0 +1,45 @@
+package com.dayang.medits.utils;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.text.MessageFormat;
+import java.util.Properties;
+
+/**
+ * 
+* @Description: 读取配置文件工具类
+
+* @author liuyafei 
+
+* @date 2016年8月9日 下午2:24:55
+ */
+public class GetPropertyUtil {
+	
+	 // 通过类加载目录getClassLoader()加载属性文件  
+    public static String getPropertyByName(String name, String ...args) {  
+        String result = "";  
+  
+        // 通过类加载目录getClassLoader()加载属性文件  
+        InputStream in = GetPropertyUtil.class.getClassLoader().getResourceAsStream("htmltemplate.properties");  
+        Properties prop = new Properties();  
+        try {  
+            prop.load(in);  
+            result = prop.getProperty(name);
+            if (result != null) {
+                result = result.trim();
+                if (result.length() > 0 && args != null && args.length > 0) {
+                    result = MessageFormat.format(result, args);
+                }
+            }
+        } catch (IOException e) {  
+            System.out.println("读取配置文件出错");  
+            e.printStackTrace();  
+        }  
+        return result;  
+    }  
+    public static void main(String[] args) {
+    	String result=GetPropertyUtil.getPropertyByName("0","ss","");
+    	System.out.println(result);
+	}
+
+}
